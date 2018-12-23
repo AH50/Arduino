@@ -93,7 +93,6 @@ display.drawPixel(64, 32, WHITE);
 display.display();
 delay(3000);
 
-
 display.clearDisplay();
 display.setTextSize(5);
 display.setTextColor(WHITE);
@@ -145,7 +144,6 @@ display.println(F(" Swiat"));
 display.println(F(" Etanolu!"));
 display.display();
 delay(5000);
-
 
 display.clearDisplay();
 display.setTextSize(2);
