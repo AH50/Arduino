@@ -3,6 +3,6 @@
 .piolibdeps
 .clang_complete
 .gcc-flags.json
-test/
-include/
-lib/readme.md
+*/test/
+*/include/
+*/lib/README
