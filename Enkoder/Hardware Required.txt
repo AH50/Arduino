@@ -1,0 +1,4 @@
+-Arduino UNO(v3)
+-encoder KY-040(with three resistors(CLK,DT,SW))
+-WS2812(led strip, 8 LED)
+-220Ω resistor
