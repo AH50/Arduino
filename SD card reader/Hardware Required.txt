@@ -1,0 +1,4 @@
+-Arduino UNO(v3)
+-SD card reader module
+-SD card
+-BMP280
