@@ -23,17 +23,13 @@ Adafruit_MQTT_Publish wilgotnosc = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/f
 Adafruit_MQTT_Publish OtwartyZamknietyPokoj = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/OtwartyZamknietyPokoj");
 Adafruit_MQTT_Publish uruchomionoESP8266 = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/UruchomionoESP8266");
 
-
-
-
-
 Adafruit_BME280 bme; // I2C
 
 int buttonPin = 12;
 int period = 60000;
 unsigned long time_now = 0;
-bool otwarte  = true;
-bool flagaWlaczenia = true;
+bool doorOpen  = true;
+bool turnOnFlag = true;
 int buttonValue;
 bool sendMaill = false;
 bool email = false;
@@ -75,14 +71,13 @@ void setup() {
   Serial.println("-- Default Test --");
 
   Serial.println();
-  
+
   bme.setSampling(Adafruit_BME280::MODE_NORMAL,
                   Adafruit_BME280::SAMPLING_X2,  // temperature
                   Adafruit_BME280::SAMPLING_X16, // pressure
                   Adafruit_BME280::SAMPLING_X1,  // humidity
                   Adafruit_BME280::FILTER_X16,
                   Adafruit_BME280::STANDBY_MS_0_5 );
-
 }
 
 
@@ -92,9 +87,9 @@ void loop() {
     time_now = millis();
     printAndSendValues();
 
-    if (otwarte == true) {
+    if (doorOpen == true) {
       OtwartyZamknietyPokoj.publish("Drzwi zostaly otwarte!!!");
-      otwarte = false;
+      doorOpen = false;
       if (sendMaill == true && email == false)
       {
         sendMaill = false;
@@ -114,7 +109,7 @@ void loop() {
 
   buttonValue = digitalRead(buttonPin);
   if (buttonValue == LOW) {
-    otwarte = true ;
+    doorOpen = true ;
     sendMaill = true;
   }
   else {
@@ -122,13 +117,11 @@ void loop() {
   }
 }
 
-
 void printAndSendValues() {
 
   Serial.print("Temperature = ");
   Serial.print(bme.readTemperature());
   Serial.println(" *C");
-
 
   Serial.print("Humidity = ");
   Serial.print(bme.readHumidity());
@@ -138,11 +131,10 @@ void printAndSendValues() {
   MQTT_connect();
   temperatura.publish(bme.readTemperature());
   wilgotnosc.publish(bme.readHumidity());
-  if (flagaWlaczenia == true) {
+  if (turnOnFlag == true) {
     uruchomionoESP8266.publish("Uruchomiono ESP8266");
-    flagaWlaczenia = false;
+    turnOnFlag = false;
   }
-
 }
 void MQTT_connect() {
   int8_t ret;

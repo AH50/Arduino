@@ -2,7 +2,9 @@
 *  using Arduino core for ESP8266 WiFi chip
 *  by Boris Shobat
 *  September 29 2016
+*https://www.instructables.com/ESP8266-GMail-Sender/
 */
+
 #ifndef G_SENDER
 #define G_SENDER
 #define GS_SERIAL_LOG_1         // Print to Serial only server responce
